@@ -47,13 +47,13 @@ router.post("/login", (req, res) => {
           const payload = { id: user.id, name: user.name };
 
           jwt.sign(
-            payload,
+          payload,
             Keys.secretOrKey,
             { expiresIn: 3600 },
             (err, token) => {
               res.json({
                 success: true,
-                token: "Bearer" + token,
+                token: "Bearer"  + token,
               });
             }
           );
@@ -67,13 +67,12 @@ router.post("/login", (req, res) => {
 
 
 
-router.get('/current', passport.authenticate('jwt', {session: true}), (req, res)=>{
-  
-  res.json({
-    id: req.body.id,
-    name: req.body.name,
-    emai: req.body.email
-  })
+router.get('/current', passport.authenticate('jwt', {session: false}), (req, res)=>{
+res.json({
+  id: req.user.id,
+  name: req.user.name
 })
+})
+ 
 
 module.exports = router;
